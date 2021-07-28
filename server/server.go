@@ -17,7 +17,7 @@ func main() {
 }
 
 func runServer() {
-	log.Printf("Starting the echo server o port: %s", PORT)
+	log.Printf("Starting the echo server on port: %s", PORT)
 	server, err := net.Listen("tcp", fmt.Sprintf(":%s", PORT))
 	if err != nil {
 		log.Fatalf("net.Listen error: %s\n", err)
@@ -40,7 +40,7 @@ func clientConnections(listener net.Listener) chan net.Conn {
 				continue
 			}
 			i++
-			fmt.Printf("%d: %v <-> %v\n", i, client.LocalAddr(), client.RemoteAddr())
+			log.Printf("%d: %v <-> %v\n", i, client.LocalAddr(), client.RemoteAddr())
 			c <- client
 		}
 	}()

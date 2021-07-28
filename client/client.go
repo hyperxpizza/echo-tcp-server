@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"net"
@@ -11,9 +12,17 @@ const (
 	ServerHost    = "localhost"
 	ServerPort    = "8080"
 	RemoteHost    = "localhost"
-	RemotePort    = "7070"
 	PingFrequency = 5 * time.Second
 )
+
+var RemotePort string
+
+//manage flags
+func init() {
+	remotePortPointer := flag.String("port", "7070", "String that specifies remote port value")
+	flag.Parse()
+	RemotePort = *remotePortPointer
+}
 
 func main() {
 	serverAddress, err := net.ResolveTCPAddr("tcp", fmt.Sprintf("%s:%s", ServerHost, ServerPort))
@@ -30,6 +39,8 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	defer connection.Close()
 
 	fmt.Printf("%s <--> %s\n", clientAddress.String(), serverAddress.String())
 	for {
