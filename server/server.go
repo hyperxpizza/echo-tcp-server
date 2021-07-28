@@ -40,7 +40,7 @@ func clientConnections(listener net.Listener) chan net.Conn {
 				continue
 			}
 			i++
-			log.Printf("%d: %v <-> %v\n", i, client.LocalAddr(), client.RemoteAddr())
+			log.Printf("%d: %s <-> %s\n", i, client.LocalAddr().String(), client.RemoteAddr().String())
 			c <- client
 		}
 	}()
